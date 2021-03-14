@@ -20,11 +20,12 @@ pygame.display.set_caption('Feeding Python')
 clock = pygame.time.Clock()
  
 snake_block = 10
-snake_speed = 20
+snake_speed = 15
  
 font_style = pygame.font.SysFont("Arial", 35)
 creditSize = pygame.font.SysFont("Arial", 20)
 score_font = pygame.font.SysFont("Arial", 30)
+title = pygame.font.SysFont("Arial", 40)
  
  
 def Your_score(score):
@@ -48,6 +49,10 @@ def our_snake(snake_block, snake_list):
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [315,120])
+
+def gameTitle(msg, color):
+    mesg = title.render(msg, True, color)
+    dis.blit(mesg, [1045,668])
  
  
 def gameLoop():
@@ -82,6 +87,9 @@ def gameLoop():
                         game_close = False
                     if event.key == pygame.K_c:
                         gameLoop()
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
  
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -119,6 +127,7 @@ def gameLoop():
  
         our_snake(snake_block, snake_List)
         Your_score(Length_of_snake - 1)
+        gameTitle("Feeding Python", red)
  
         pygame.display.update()
  
