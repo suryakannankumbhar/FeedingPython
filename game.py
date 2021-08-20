@@ -1,85 +1,82 @@
 import pygame
 import time
 import random
- 
+
 pygame.init()
- 
+
 white = (255, 255, 255)
 yellow = (255, 255, 102)
 black = (0, 0, 0)
 red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
- 
+
 dis_width = 1280
 dis_height = 720
- 
+
 dis = pygame.display.set_mode((dis_width, dis_height))
-pygame.display.set_caption('Feeding Python')
- 
+pygame.display.set_caption("Feeding Python")
+
 clock = pygame.time.Clock()
- 
-snake_block = 10
+
+snake_block = 20
 snake_speed = 15
- 
+
 font_style = pygame.font.SysFont("Arial", 35)
-creditSize = pygame.font.SysFont("Arial", 20)
+
 score_font = pygame.font.SysFont("Arial", 30)
 title = pygame.font.SysFont("Arial", 40)
- 
- 
+
+
 def Your_score(score):
     value = score_font.render("Your Score: " + str(score), True, red)
     dis.blit(value, [10, 10])
 
+
 def finalScore(score):
     value = score_font.render("Your Final Score: " + str(score), True, black)
-    dis.blit(value, [530,300])
-def credits(msg, color):
-    
-    mesg = creditSize.render(msg, True, color)
-    dis.blit(mesg, [455,690])
- 
- 
+    dis.blit(value, [530, 300])
+
+
 def our_snake(snake_block, snake_list):
     for x in snake_list:
         pygame.draw.rect(dis, white, [x[0], x[1], snake_block, snake_block])
- 
- 
+
+
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [315,120])
+    dis.blit(mesg, [315, 120])
+
 
 def gameTitle(msg, color):
     mesg = title.render(msg, True, color)
-    dis.blit(mesg, [1045,668])
- 
- 
+    dis.blit(mesg, [1045, 668])
+
+
 def gameLoop():
     game_over = False
     game_close = False
- 
+
     x1 = dis_width / 2
     y1 = dis_height / 2
- 
+
     x1_change = 0
     y1_change = 0
- 
+
     snake_List = []
     Length_of_snake = 1
- 
-    foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
-    foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
- 
+
+    foodx = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
+    foody = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
+
     while not game_over:
- 
+
         while game_close == True:
             dis.fill(white)
             message("Ops!! You Lost!! Press C to Play Again or Q to Quit!!", red)
             finalScore(Length_of_snake - 1)
-            credits("@made by SURYA in association with google.com",red)
             pygame.display.update()
- 
+
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
@@ -90,7 +87,7 @@ def gameLoop():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
- 
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
@@ -107,7 +104,7 @@ def gameLoop():
                 elif event.key == pygame.K_DOWN:
                     y1_change = snake_block
                     x1_change = 0
- 
+
         if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
             game_close = True
         x1 += x1_change
@@ -120,26 +117,26 @@ def gameLoop():
         snake_List.append(snake_Head)
         if len(snake_List) > Length_of_snake:
             del snake_List[0]
- 
+
         for x in snake_List[:-1]:
             if x == snake_Head:
                 game_close = True
- 
+
         our_snake(snake_block, snake_List)
         Your_score(Length_of_snake - 1)
         gameTitle("Feeding Python", red)
- 
+
         pygame.display.update()
- 
+
         if x1 == foodx and y1 == foody:
-            foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
-            foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+            foodx = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
+            foody = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
             Length_of_snake += 1
- 
+
         clock.tick(snake_speed)
- 
+
     pygame.quit()
     quit()
- 
- 
+
+
 gameLoop()
